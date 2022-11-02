@@ -25,6 +25,7 @@ public class GameEngine {
         board.getCreature(point)
                 .ifPresent(defender -> turnQueue.getCurrentCreature()
                         .attack(defender));
+        pass();
     }
 
     public boolean canMove(final Point aPoint) {
@@ -44,8 +45,9 @@ public class GameEngine {
         turnQueue.next();
     }
 
-    public void addObserver(final String aEventType, final PropertyChangeListener aObserver) {
-        observerSupport.addPropertyChangeListener(aEventType, aObserver);
+    public void addObserver(final PropertyChangeListener aObserver) {
+        observerSupport.addPropertyChangeListener(aObserver);
+        turnQueue.addObserver(aObserver);
     }
 
     public boolean canAttack(final Point point) {
@@ -54,5 +56,9 @@ public class GameEngine {
         return board.getCreature(point)
                 .isPresent()
                 && distance < 2 && distance > 0;
+    }
+
+    public boolean isCurrentCreature(Point aPoint) {
+        return Optional.of(turnQueue.getCurrentCreature()).equals(board.getCreature(aPoint));
     }
 }
