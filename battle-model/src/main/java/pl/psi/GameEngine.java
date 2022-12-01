@@ -12,6 +12,7 @@ import pl.psi.creatures.Creature;
 public class GameEngine {
 
     public static final String CREATURE_MOVED = "CREATURE_MOVED";
+    public static final String END_OF_TURN = "END_OF_TURN";
     private final TurnQueue turnQueue;
     private final Board board;
     private final PropertyChangeSupport observerSupport = new PropertyChangeSupport(this);

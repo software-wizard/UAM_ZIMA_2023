@@ -9,21 +9,17 @@ public class CastleCreatureFactory
     {
         if( aIsUpgraded )
         {
-            switch( aTier )
-            {
-                case 1:
-                    return new Creature.Builder().statistic( CreatureStatistic.BLACK_KNIGHT )
-                        .amount( aAmount )
+            if (aTier == 1) {
+                return new Creature.Builder().statistic(CreatureStatistic.BLACK_KNIGHT)
+                        .amount(aAmount)
                         .build();
             }
         }
         else
         {
-            switch( aTier )
-            {
-                case 1:
-                    return new Creature.Builder().statistic( CreatureStatistic.BLACK_KNIGHT )
-                        .amount( aAmount )
+            if (aTier == 1) {
+                return new Creature.Builder().statistic(CreatureStatistic.BLACK_KNIGHT)
+                        .amount(aAmount)
                         .build();
             }
         }
