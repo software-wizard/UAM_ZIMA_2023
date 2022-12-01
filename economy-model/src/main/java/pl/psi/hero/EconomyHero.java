@@ -56,6 +56,6 @@ public class EconomyHero
 
     public enum Fraction
     {
-        NECROPOLIS;
+        NECROPOLIS
     }
 }
