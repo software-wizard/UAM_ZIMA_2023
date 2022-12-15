@@ -23,6 +23,8 @@
                 <Label fx:id="roundNumberLabel" text="X"/>
                 <Label fx:id="currentStaticLabel" text="GOLD: "/>
                 <Label fx:id="currentGoldLabel" text="XXXX"/>
+                <Label text="Select map: "/>
+                <ComboBox fx:id="chooseMapComboBox"/>
             </children>
         </HBox>
     </top>
