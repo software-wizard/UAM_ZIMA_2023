@@ -1,23 +1,26 @@
 package pl.psi.specialfields.terrain;
 
 import pl.psi.creatures.Creature;
-import pl.psi.specialfields.BuffInterface;
+import pl.psi.creatures.CreatureAlignmentTypes;
+import pl.psi.creatures.CreatureBuffValue;
+import pl.psi.fields.TerrainTypes;
 import pl.psi.specialfields.Field;
 
-import java.util.List;
-
-public class CloverField extends Field implements BuffInterface {
+public class CloverField extends Field{
 
     // Wszystkie jednostki z neutralnych frakcji zyskują 2 punkty szczęścia.
     // Szczęśie może mieć wartość (-3; 3)
 
-    public CloverField(){
-        super();
+    private final String type = TerrainTypes.CLOVER_FIELD;
+
+    private final CreatureBuffValue buffValue = new CreatureBuffValue("luck", 2, CreatureAlignmentTypes.NEUTRAL);
+
+    public CloverField() {
     }
+
 
     @Override
-    public void buffCreature(Creature creature) {
-
+    public String getType() {
+        return type;
     }
-
 }

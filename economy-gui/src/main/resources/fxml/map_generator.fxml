@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="925.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1">
+    <center>
+        <HBox>
+            <HBox fx:id="tileOptionsBox" styleClass="centerHBox" BorderPane.alignment="CENTER">
+                <VBox fx:id="terrainList" styleClass="slider" BorderPane.alignment="CENTER_LEFT">
+                    <ImageView fx:id="selectedFieldSprite"/>
+                    <RadioButton fx:id="rb_clover_field" text="Clover Field"/>
+                    <RadioButton fx:id="rb_cursed_ground_field" text="Cursed Ground Field"/>
+                    <RadioButton fx:id="rb_evil_fog_field" text="Evil Fog Field"/>
+                    <RadioButton fx:id="rb_holy_ground_field" text="Holy Ground Field"/>
+                </VBox>
+                <VBox fx:id="obstacleList" styleClass="slider" BorderPane.alignment="CENTER_RIGHT">
+                    <ImageView fx:id="selectedObstacleSprite"/>
+                    <RadioButton fx:id="obstacleRbFireWall" text="Fire Wall"/>
+                    <RadioButton fx:id="obstacleRbForceField" text="Force Field"/>
+                    <RadioButton fx:id="obstacleRbLandMine" text="Land Mine"/>
+                    <RadioButton fx:id="obstacleRbQuickSand" text="Quick Sand"/>
+                </VBox>
+
+            </HBox>
+            <HBox fx:id="mapGridBox" styleClass="centerHBox" BorderPane.alignment="TOP_RIGHT">
+                <GridPane fx:id="gridMap" BorderPane.alignment="CENTER"/>
+            </HBox>
+        </HBox>
+    </center>
+    <top>
+        <HBox BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Map Generator"/>
+            </children>
+        </HBox>
+    </top>
+    <bottom>
+        <HBox BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="readyButton" mnemonicParsing="false" text="READY"/>
+            </children>
+        </HBox>
+    </bottom>
+
+    <stylesheets>
+        <URL value="@main.css"/>
+    </stylesheets>
+</BorderPane>

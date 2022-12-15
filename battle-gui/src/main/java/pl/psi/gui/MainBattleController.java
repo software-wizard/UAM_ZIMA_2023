@@ -38,22 +38,29 @@ public class MainBattleController {
             for (int y = 0; y < 10; y++) {
                 final int x1 = x;
                 final int y1 = y;
-                final MapTile mapTile = new MapTile("");
+                MapTile mapTile = new MapTile("");
+                Point point = new Point(x1, y1);
+                mapTile.setBackgroundSprite(gameEngine.getTerrainType(point));
+
+                mapTile.setObstacleSprite(gameEngine.getObstacleType(point));
+
+
                 gameEngine.getCreature(new Point(x, y))
                         .ifPresent(c -> mapTile.setName(c.toString()));
 
                 if (gameEngine.isCurrentCreature(new Point(x, y))) {
-                    mapTile.setBackground(Color.GREEN);
+                    mapTile.setBackgroundSprite(Color.GREEN);
                 }
 
                 if (gameEngine.canMove(new Point(x, y))) {
-                    mapTile.setBackground(Color.GREY);
+
+                    mapTile.setMoveRange();
 
                     mapTile.addEventHandler(MouseEvent.MOUSE_CLICKED,
                             e -> gameEngine.move(new Point(x1, y1)));
                 }
                 if (gameEngine.canAttack(new Point(x, y))) {
-                    mapTile.setBackground(Color.RED);
+                    mapTile.setBackgroundSprite(Color.RED);
 
                     mapTile.addEventHandler(MouseEvent.MOUSE_CLICKED,
                             e -> gameEngine.attack(new Point(x1, y1)));
@@ -63,4 +70,6 @@ public class MainBattleController {
             }
         }
     }
+
+
 }

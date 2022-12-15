@@ -62,4 +62,12 @@ public class GameEngine {
     public boolean isCurrentCreature(Point aPoint) {
         return Optional.of(turnQueue.getCurrentCreature()).equals(board.getCreature(aPoint));
     }
+
+    public String getTerrainType(Point point){
+        return board.getTerrainType(point);
+    }
+
+    public String getObstacleType(Point point) {
+        return board.getObstacleType(point);
+    }
 }
