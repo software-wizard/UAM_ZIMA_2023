@@ -7,7 +7,7 @@ import pl.psi.specialfields.terrain.EvilFog;
 
 class HolyGroundTest {
 
-    @Test
+    /*@Test
     void shouldGiveOneMoraleToGoodCreature() {
         EvilFog evilFog = new EvilFog();
         Creature goodCreature = new Creature.Builder().statistic(CreatureStats.builder().build()).morale(1).alignment(GOOD).build();
@@ -25,6 +25,6 @@ class HolyGroundTest {
         evilFog.buffCreature(evilCreature);
 
         assertEquals(0, evilCreature.getMorale());
-    }
+    }*/
 
 }

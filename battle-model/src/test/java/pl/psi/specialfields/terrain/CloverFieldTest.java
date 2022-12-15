@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CloverFieldTest {
 
-    @Test
+    /*@Test
     void shouldGiveTwoLuckToNeutrallyAlignedCreature() {
         CloverField cloverField = new CloverField();
         Creature creature1 = new Creature.Builder().statistic(CreatureStats.builder().build()).luck(0).build();
@@ -50,7 +50,7 @@ class CloverFieldTest {
         cloverField.buffCreature(creature);
 
         assertThat(creature.getLuck()).isEqualTo(3);
-    }
+    }*/
 
 
 }

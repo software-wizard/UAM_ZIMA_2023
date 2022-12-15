@@ -1,6 +1,5 @@
 package pl.psi.specialfields;
 
-import pl.psi.fields.TerrainTypes;
 import pl.psi.specialfields.terrain.CloverField;
 import pl.psi.specialfields.terrain.CursedGround;
 import pl.psi.specialfields.terrain.EvilFog;
