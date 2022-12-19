@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +19,7 @@ import pl.psi.Board;
 import pl.psi.Point;
 import pl.psi.fields.ObstacleTypes;
 import pl.psi.fields.TerrainTypes;
+import pl.psi.mapgenerator.MapGeneratorValues;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -75,6 +73,9 @@ public class MapEditorController {
     @FXML
     RadioButton obstacleRbQuickSand;
 
+    @FXML
+    TextField mapNameTextField;
+
     private String fieldType;
 
     private boolean isTerrainSelected;
@@ -102,13 +103,21 @@ public class MapEditorController {
         radioButtonController();
 
         readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            try {
-                convertMapToJson(fieldHashMap);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            if (mapNameTextField.getText() == null || mapNameTextField.getText().trim().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Map name is empty!");
+                alert.setContentText("If you wish to proceed, please enter a valid map name.");
+                alert.showAndWait();
+            } else {
+                try {
+                    convertMapToJson(fieldHashMap, mapNameTextField.getText());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                Stage stage = (Stage) readyButton.getScene().getWindow();
+                stage.close();
             }
-            Stage stage = (Stage) readyButton.getScene().getWindow();
-            stage.close();
         });
         for (int x = 0; x < 15; x++) {
             for (int y = 0; y < 10; y++) {
@@ -117,7 +126,7 @@ public class MapEditorController {
                 MapField mapTile = new MapField("");
                 mapTile.setTerrainType(fieldType);
 
-                mapTile.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+                mapTile.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                     if (isTerrainSelected) {
                         mapTile.setTerrainType(fieldType);
                     } else {
@@ -228,10 +237,13 @@ public class MapEditorController {
         }
     }
 
-    private void convertMapToJson(HashMap<Point, MapField> fieldMap) throws IOException {
+    private void convertMapToJson(HashMap<Point, MapField> fieldMap, String fileName) throws IOException {
         ObjectMapper mapper = new JsonMapper();
         List<BattleMapField> battleField = hashMapToList(fieldMap);
-        FileWriter file = new FileWriter("economy-gui/src/main/java/pl/psi/gui/mapgenerator/maps_json/test_converter.json");
+        String path = MapGeneratorValues.MAPS_PATH;
+        path += fileName;
+        path += ".json";
+        FileWriter file = new FileWriter(path);
         mapper.writeValue(file, battleField);
         file.close();
     }
