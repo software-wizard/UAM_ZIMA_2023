@@ -2,7 +2,10 @@ package pl.psi.gui;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.ComboBox;
+import pl.psi.mapgenerator.MapGeneratorValues;
 
 public class EcoController implements PropertyChangeListener {
     private final EconomyEngine economyEngine;
@@ -49,11 +53,17 @@ public class EcoController implements PropertyChangeListener {
         economyEngine.addObserver(EconomyEngine.HERO_BOUGHT_CREATURE, this);
         economyEngine.addObserver(EconomyEngine.NEXT_ROUND, this);
 
+        chooseMapComboBox.getSelectionModel().selectFirst();
 
         readyButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
             if (economyEngine.getRoundNumber() < 4) {
                 economyEngine.pass();
             } else {
+                try {
+                    saveSelectedMap(chooseMapComboBox.getValue());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 goToBattle();
             }
         });
@@ -73,7 +83,6 @@ public class EcoController implements PropertyChangeListener {
                 .clear();
         heroStateHBox.getChildren()
                 .clear();
-        chooseMapComboBox.getItems().clear();
 
         final EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
         final VBox creatureShop = new VBox();
@@ -102,7 +111,6 @@ public class EcoController implements PropertyChangeListener {
                 .add(creaturesBox);
 
         chooseMapComboBox.setItems(generateMapSelection());
-        chooseMapComboBox.getSelectionModel().selectPrevious();
         chooseMapComboBox.getItems();
     }
 
@@ -134,5 +142,11 @@ public class EcoController implements PropertyChangeListener {
         }
 
         return maps;
+    }
+
+    private void saveSelectedMap(String mapName) throws IOException {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("hero-common/src/main/java/pl/psi/mapgenerator/selectedMap.txt"));
+            writer.write(mapName);
+            writer.close();
     }
 }

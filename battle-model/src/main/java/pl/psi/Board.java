@@ -12,6 +12,7 @@ import com.google.common.collect.HashBiMap;
 
 
 import pl.psi.creatures.Creature;
+import pl.psi.mapgenerator.MapGeneratorValues;
 import pl.psi.specialfields.*;
 
 /**
@@ -61,9 +62,15 @@ public class Board {
                 .get(aCreature);
     }
 
-    private void deserializeMapFromJson() {
+    private void deserializeMapFromJson(){
         ObjectMapper mapper = new ObjectMapper();
-        File jsonFile = new File("economy-gui/src/main/java/pl/psi/gui/mapgenerator/maps_json/test_converter.json");
+        String fileName;
+        try {
+            fileName = getSelectedMapName();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        File jsonFile = new File(MapGeneratorValues.MAPS_PATH + fileName);
         List<JsonConvertedField> jsonConvertedFieldList;
         try {
             jsonConvertedFieldList = mapper.readValue(jsonFile, new TypeReference<List<JsonConvertedField>>() {
@@ -81,6 +88,15 @@ public class Board {
                 obstacleBiMap.put(point, obstacleFactory.getType(jsonConvertedField.getObstacleType()));
             }
         }
+    }
+
+    private String getSelectedMapName() throws IOException {
+        String path = "hero-common/src/main/java/pl/psi/mapgenerator/selectedMap.txt";
+        BufferedReader reader = new BufferedReader(new FileReader(path));
+        String result = reader.readLine();
+        reader.close();
+        result += ".json";
+        return result;
     }
 
     public String getTerrainType(Point point) {
