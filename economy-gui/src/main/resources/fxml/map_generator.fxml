@@ -42,7 +42,9 @@
     <bottom>
         <HBox BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="readyButton" mnemonicParsing="false" text="READY"/>
+                <Label text="Map name: "/>
+                <TextField fx:id="mapNameTextField" minWidth="200"/>
+                <Button fx:id="readyButton" mnemonicParsing="false" text="READY" maxWidth="100"/>
             </children>
         </HBox>
     </bottom>
