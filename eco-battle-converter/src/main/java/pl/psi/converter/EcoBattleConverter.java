@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.psi.Hero;
+import pl.psi.HeroStats;
+import pl.psi.artifacts.EconomyArtifact;
+import pl.psi.artifacts.EconomyArtifactFactory;
 import pl.psi.creatures.Creature;
 import pl.psi.gui.MainBattleController;
 import pl.psi.creatures.NecropolisFactory;
@@ -43,9 +46,26 @@ public class EcoBattleConverter
     {
         final List< Creature > creatures = new ArrayList<>();
         final NecropolisFactory factory = new NecropolisFactory();
+        final List< EconomyArtifact > artifacts = new ArrayList<>();
+        final EconomyArtifactFactory artifactFactory = new EconomyArtifactFactory();
+        artifacts.add(artifactFactory.create("right hand","Centaur's Axe"));
+        int allAttack = 0, allArmor = 0, allSpellPower = 0, allKnowledge = 0;
+        for(EconomyArtifact i : artifacts) {
+            allAttack += i.getAttack();
+            allArmor += i.getArmor();
+            allSpellPower += i.getSpellPower();
+            allKnowledge += i.getSpellPower();
+        }
+       final HeroStats heroStats = HeroStats.builder()
+               .attack(allAttack)
+               .armor(allArmor)
+               .spellPower(allSpellPower)
+               .knowledge(allKnowledge)
+               .build();
+
         aPlayer1.getCreatures()
             .forEach( ecoCreature -> creatures.add( factory.create( ecoCreature.isUpgraded(),
                 ecoCreature.getTier(), ecoCreature.getAmount() ) ) );
-        return new Hero( creatures );
+        return new Hero( creatures, heroStats);
     }
 }

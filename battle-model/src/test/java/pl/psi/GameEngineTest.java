@@ -11,14 +11,14 @@ import pl.psi.creatures.CastleCreatureFactory;
  */
 public class GameEngineTest
 {
-    @Test
-    void shoudWorksHeHe()
-    {
-        final CastleCreatureFactory creatureFactory = new CastleCreatureFactory();
-        final GameEngine gameEngine =
-            new GameEngine( new Hero( List.of( creatureFactory.create( 1, false, 5 ) ) ),
-                new Hero( List.of( creatureFactory.create( 1, false, 5 ) ) ) );
-
-        gameEngine.attack( new Point( 1, 1 ) );
-    }
+//    @Test
+////    void shoudWorksHeHe()
+////    {
+////        final CastleCreatureFactory creatureFactory = new CastleCreatureFactory();
+////        final GameEngine gameEngine =
+////            new GameEngine( new Hero( List.of( creatureFactory.create( 1, false, 5 ) ) ),
+////                new Hero( List.of( creatureFactory.create( 1, false, 5 ) ) ) );
+////
+////        gameEngine.attack( new Point( 1, 1 ) );
+////    }
 }
