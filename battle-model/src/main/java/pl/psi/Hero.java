@@ -2,6 +2,7 @@ package pl.psi;
 
 import java.util.List;
 
+import pl.psi.artifacts.ArtifactStatisticIf;
 import pl.psi.creatures.Creature;
 
 import lombok.Getter;
@@ -14,8 +15,12 @@ public class Hero
     @Getter
     private final List< Creature > creatures;
 
-    public Hero( final List< Creature > aCreatures )
+    @Getter
+    private final HeroStatisticIf stats;
+
+    public Hero( final List< Creature > aCreatures, final HeroStatisticIf aStats)
     {
         creatures = aCreatures;
+        stats = aStats;
     }
 }
