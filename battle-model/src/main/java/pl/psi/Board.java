@@ -60,4 +60,6 @@ public class Board
         return map.inverse()
             .get( aCreature );
     }
+
+
 }

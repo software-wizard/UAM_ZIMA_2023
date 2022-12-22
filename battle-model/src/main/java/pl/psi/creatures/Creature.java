@@ -8,9 +8,12 @@ package pl.psi.creatures;//  ***************************************************
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Random;
+import java.util.*;
 
+import lombok.AccessLevel;
 import lombok.Setter;
+import pl.psi.EffectHolder;
+import pl.psi.EffectAbstract;
 import pl.psi.TurnQueue;
 
 import com.google.common.collect.Range;
@@ -23,12 +26,15 @@ import lombok.Getter;
 @Getter
 public class Creature implements PropertyChangeListener {
     private CreatureStatisticIf stats;
+//    private CreatureStatisticIf baseStats;
     @Setter
     private int amount;
-    @Setter
     private int currentHp;
     private int counterAttackCounter = 1;
+    @Setter(AccessLevel.PROTECTED)
     private DamageCalculatorIf calculator;
+    private EffectHolder effectLog;
+
 
     Creature() {
     }
@@ -36,6 +42,7 @@ public class Creature implements PropertyChangeListener {
     private Creature(final CreatureStatisticIf aStats, final DamageCalculatorIf aCalculator,
                      final int aAmount) {
         stats = aStats;
+        effectLog = new EffectHolder(aStats);
         amount = aAmount;
         currentHp = stats.getMaxHp();
         calculator = aCalculator;
@@ -55,19 +62,19 @@ public class Creature implements PropertyChangeListener {
         return getAmount() > 0;
     }
 
-    private void applyDamage(final Creature aDefender, final int aDamage) {
-        int hpToSubstract = aDamage % aDefender.getMaxHp();
-        int amountToSubstract = Math.round(aDamage / aDefender.getMaxHp());
+    protected void applyDamage(final Creature aDefender, final int aDamage) {
+        int hpToSubtract = aDamage % aDefender.getMaxHp();
+        int amountToSubtract = Math.round(aDamage / aDefender.getMaxHp());
 
-        int hp = aDefender.getCurrentHp() - hpToSubstract;
+        int hp = aDefender.getCurrentHp() - hpToSubtract;
         if (hp <= 0) {
-            setCurrentHp(aDefender.getMaxHp() - hp);
-            setAmount(aDefender.getAmount() - 1);
+            aDefender.setCurrentHp(aDefender.getMaxHp() - hp);
+            aDefender.setAmount(aDefender.getAmount() - 1);
         }
         else{
-            setCurrentHp(hp);
+            aDefender.setCurrentHp(hp);
         }
-        setAmount(aDefender.getAmount() - amountToSubstract);
+        aDefender.setAmount(aDefender.getAmount() - amountToSubtract);
     }
 
     private int getMaxHp() {
@@ -78,11 +85,11 @@ public class Creature implements PropertyChangeListener {
         currentHp = aCurrentHp;
     }
 
-    private boolean canCounterAttack(final Creature aDefender) {
+    protected boolean canCounterAttack(final Creature aDefender) {
         return aDefender.getCounterAttackCounter() > 0 && aDefender.getCurrentHp() > 0;
     }
 
-    private void counterAttack(final Creature aAttacker) {
+    protected void counterAttack(final Creature aAttacker) {
         final int damage = aAttacker.getCalculator()
                 .calculateDamage(aAttacker, this);
         applyDamage(this, damage);
@@ -144,6 +151,23 @@ public class Creature implements PropertyChangeListener {
             return new Creature(statistic, calculator, amount);
         }
     }
+    
+    private void updateStats(){
+        this.stats = effectLog.getStats();
+    }
+    public void inflictEffect(EffectAbstract effect){
+        effectLog.addEffect(effect);
+        updateStats();
+    }
+
+    public void updateNextRound() {
+        effectLog.updateEffectsTime();
+        updateStats();
+    }
+
+    public void approachedInMelee(){}
+
+
 
     @Override
     public String toString() {
