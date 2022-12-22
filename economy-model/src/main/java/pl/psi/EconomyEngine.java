@@ -1,11 +1,11 @@
 package pl.psi;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
 import pl.psi.creatures.EconomyCreature;
 import pl.psi.hero.CreatureShop;
 import pl.psi.hero.EconomyHero;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class EconomyEngine
 {
@@ -57,8 +57,8 @@ public class EconomyEngine
     private void endTurn()
     {
         roundNumber += 1;
-        hero1.addGold( 2000 * roundNumber );
-        hero2.addGold( 2000 * roundNumber );
+        hero1.changeGoldAmount( 2000 * roundNumber );
+        hero2.changeGoldAmount( 2000 * roundNumber );
         observerSupport.firePropertyChange( NEXT_ROUND, roundNumber - 1, roundNumber );
     }
 
@@ -74,13 +74,13 @@ public class EconomyEngine
 
     public EconomyHero getPlayer1()
     {
-        // TODO make copy
-        return hero1;
+        EconomyHero player1 = new EconomyHero(hero1);
+        return player1;
     }
 
     public EconomyHero getPlayer2()
     {
-        // TODO make copy
-        return hero2;
+        EconomyHero player2 = new EconomyHero(hero2);
+        return player2;
     }
 }

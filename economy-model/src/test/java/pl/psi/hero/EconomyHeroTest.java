@@ -1,11 +1,10 @@
 package pl.psi.hero;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import pl.psi.creatures.EconomyNecropolisFactory;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EconomyHeroTest
 {
@@ -36,6 +35,6 @@ class EconomyHeroTest
     @Test
     void shouldThrowExceptionWhileYouTrySubstractMoreGoldThanHeroHas()
     {
-        assertThrows( IllegalStateException.class, () -> hero.substractGold( 3001 ) );
+        assertThrows( IllegalStateException.class, () -> hero.changeGoldAmount( -3001 ) );
     }
 }

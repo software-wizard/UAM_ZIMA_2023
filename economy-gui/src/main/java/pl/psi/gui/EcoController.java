@@ -1,20 +1,19 @@
 package pl.psi.gui;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import pl.psi.EconomyEngine;
-import pl.psi.converter.EcoBattleConverter;
-import pl.psi.creatures.EconomyCreature;
-import pl.psi.creatures.EconomyNecropolisFactory;
-import pl.psi.hero.EconomyHero;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import pl.psi.EconomyEngine;
+import pl.psi.converter.EcoBattleConverter;
+import pl.psi.creatures.CreatureFactory;
+import pl.psi.creatures.EconomyCreature;
+import pl.psi.hero.EconomyHero;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class EcoController implements PropertyChangeListener
 {
@@ -74,7 +73,7 @@ public class EcoController implements PropertyChangeListener
         heroStateHBox.getChildren()
             .clear();
 
-        final EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
+        final CreatureFactory factory = CreatureFactory.fractionEconomyFactory(economyEngine.getPlayer1().getFraction());
         final VBox creatureShop = new VBox();
         for( int i = 1; i < 8; i++ )
         {

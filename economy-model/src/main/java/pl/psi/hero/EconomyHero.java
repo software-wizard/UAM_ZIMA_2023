@@ -1,22 +1,30 @@
 package pl.psi.hero;
 
+import pl.psi.creatures.EconomyCreature;
+import pl.psi.resources.Gold;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import pl.psi.creatures.EconomyCreature;
 
 public class EconomyHero
 {
 
     private final Fraction fraction;
     private final List< EconomyCreature > creatureList;
-    private int gold;
+    private Gold gold;
 
     public EconomyHero( final Fraction aFraction, final int aGold )
     {
         fraction = aFraction;
-        gold = aGold;
+        gold = new Gold(aGold);
         creatureList = new ArrayList<>();
+    }
+    public EconomyHero(EconomyHero economyHero){
+        fraction=economyHero.getFraction();
+        gold=new Gold(economyHero.getGold());
+        creatureList=economyHero.getCreatures();
+
+
     }
 
     void addCreature( final EconomyCreature aCreature )
@@ -28,14 +36,13 @@ public class EconomyHero
         creatureList.add( aCreature );
     }
 
-    public int getGold()
-    {
-        return gold;
-    }
 
-    public void addGold( final int aAmount )
+    public int getGold(){
+        return gold.getGold();
+    }
+    public void changeGoldAmount(final int aAmount )
     {
-        gold += aAmount;
+        gold = gold.changeAmountOfGold(new Gold(aAmount));
     }
 
     public List< EconomyCreature > getCreatures()
@@ -43,13 +50,8 @@ public class EconomyHero
         return List.copyOf( creatureList );
     }
 
-    void substractGold( final int aAmount )
-    {
-        if( aAmount > gold )
-        {
-            throw new IllegalStateException( "Hero has not enought money" );
-        }
-        gold -= aAmount;
+    public Fraction getFraction() {
+        return fraction;
     }
 
     public enum Fraction

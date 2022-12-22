@@ -1,9 +1,10 @@
 package pl.psi.creatures;
 
-public class EconomyNecropolisFactory
-{
+import pl.psi.exception.TiersAboveLimit;
 
-    private static final String EXCEPTION_MESSAGE = "We support tiers from 1 to 7";
+public class EconomyNecropolisFactory  extends CreatureFactory {
+
+
 
     public EconomyCreature create( final boolean aIsUpgraded, final int aTier, final int aAmount )
     {
@@ -26,7 +27,7 @@ public class EconomyNecropolisFactory
                 case 7:
                     return new EconomyCreature( CreatureStatistic.BONE_DRAGON, aAmount, 1800 );
                 default:
-                    throw new IllegalArgumentException( EXCEPTION_MESSAGE );
+                    throw new TiersAboveLimit();
             }
         }
         else
@@ -48,7 +49,7 @@ public class EconomyNecropolisFactory
                 case 7:
                     return new EconomyCreature( CreatureStatistic.GHOST_DRAGON, aAmount, 3000 );
                 default:
-                    throw new IllegalArgumentException( EXCEPTION_MESSAGE );
+                    throw new TiersAboveLimit();
             }
         }
     }

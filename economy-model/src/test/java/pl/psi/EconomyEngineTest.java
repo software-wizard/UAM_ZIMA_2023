@@ -1,12 +1,13 @@
 package pl.psi;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import pl.psi.creatures.CreatureFactory;
 import pl.psi.creatures.EconomyNecropolisFactory;
+import pl.psi.exception.HasNotEnoughMoney;
 import pl.psi.hero.EconomyHero;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class EconomyEngineTest
 {
@@ -53,5 +54,37 @@ class EconomyEngineTest
         economyEngine.buy( creatureFactory.create( false, 2, 1 ) );
         assertEquals( 900, h2.getGold() );
         assertEquals( 940, h1.getGold() );
+    }
+
+    @Test
+    void ShouldHaveGoodAmountOfGold(){
+      h1= new EconomyHero(EconomyHero.Fraction.NECROPOLIS,200);
+      h1.changeGoldAmount(200);
+      assertEquals(h1.getGold(),400);
+
+    }
+
+    @Test
+    void ShouldHaveThrewError(){
+        h1= new EconomyHero(EconomyHero.Fraction.NECROPOLIS,200);
+        HasNotEnoughMoney hero_has_not_enough_money = assertThrows(HasNotEnoughMoney.class, () -> h1.changeGoldAmount(-300));
+        assertTrue(hero_has_not_enough_money.getMessage().contentEquals("Hero has not enough money"));
+
+    }
+
+    @Test
+    void ShouldCreateProperFractionCreatureFactory(){
+        EconomyHero economyHero= new EconomyHero(EconomyHero.Fraction.NECROPOLIS,200);
+        CreatureFactory factory = CreatureFactory.fractionEconomyFactory(economyHero.getFraction());
+        assertEquals("EconomyNecropolisFactory",factory.getClass().getSimpleName());
+
+}
+
+    @Test
+    void ShouldHaveDifferentInstance(){
+        h1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS,200);
+        EconomyHero player1=economyEngine.getPlayer1();
+
+        assertNotEquals(h1,player1);
     }
 }
