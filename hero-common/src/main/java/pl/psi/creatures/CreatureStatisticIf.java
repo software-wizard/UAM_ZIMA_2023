@@ -2,6 +2,8 @@ package pl.psi.creatures;
 
 import com.google.common.collect.Range;
 
+import java.util.List;
+
 public interface CreatureStatisticIf {
     String getName();
     int getAttack();
@@ -12,4 +14,5 @@ public interface CreatureStatisticIf {
     int getTier();
     String getDescription();
     boolean isUpgraded();
+    List<CreatureSpecialAttributeTypes> getSpecialAttributes();
 }
