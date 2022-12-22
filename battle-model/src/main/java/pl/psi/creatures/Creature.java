@@ -12,7 +12,7 @@ import java.util.*;
 
 import lombok.AccessLevel;
 import lombok.Setter;
-import pl.psi.EffectLog;
+import pl.psi.EffectHolder;
 import pl.psi.EffectAbstract;
 import pl.psi.TurnQueue;
 
@@ -33,7 +33,7 @@ public class Creature implements PropertyChangeListener {
     private int counterAttackCounter = 1;
     @Setter(AccessLevel.PROTECTED)
     private DamageCalculatorIf calculator;
-    private EffectLog effectLog;
+    private EffectHolder effectLog;
 
 
     Creature() {
@@ -42,7 +42,7 @@ public class Creature implements PropertyChangeListener {
     private Creature(final CreatureStatisticIf aStats, final DamageCalculatorIf aCalculator,
                      final int aAmount) {
         stats = aStats;
-        effectLog = new EffectLog(aStats);
+        effectLog = new EffectHolder(aStats);
         amount = aAmount;
         currentHp = stats.getMaxHp();
         calculator = aCalculator;

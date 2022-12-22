@@ -7,18 +7,14 @@ import java.util.Collection;
 
 @Getter
 public class PermanentStatsBuffEffect extends EffectAbstract {
-    private final String name;
-    private final int duration;
-    private final String modifiedStat;
+    private final String statisticToRevert;
     private final CreatureStatisticIf statsToAdd;
     private final boolean isNegative;
 
     public PermanentStatsBuffEffect(String aName, String aStat,
                                     CreatureStatisticIf aStatsToAdd, boolean aIsNegative) {
         super(aName, 0, aStat);
-        name = aName;
-        duration = 0;
-        modifiedStat = aStat;
+        statisticToRevert = aStat;
         statsToAdd = aStatsToAdd;
         isNegative = aIsNegative;
     }
