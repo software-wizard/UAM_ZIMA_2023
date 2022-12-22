@@ -7,14 +7,14 @@ import pl.psi.creatures.CreatureStatisticIf;
 import java.util.*;
 
 @Getter
-public class EffectLog {
+public class EffectHolder {
     private final Set<EffectAbstract> activeEffects = new HashSet<>();
     private final Set<EffectTimePair> effectsTimeTable = new HashSet<>();
 
     private final CreatureStatisticIf baseStats;
     private CreatureStatisticIf stats;
 
-    public EffectLog(CreatureStatisticIf baseStats) {
+    public EffectHolder(CreatureStatisticIf baseStats) {
         this.baseStats = baseStats;
         this.stats = baseStats;
     }
