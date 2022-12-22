@@ -5,6 +5,8 @@ import com.google.common.collect.Range;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 /**
  * TODO: Describe this class (The first line - until the first dot - will interpret as the brief description).
  */
@@ -19,5 +21,8 @@ public class CreatureStats implements CreatureStatisticIf{
     private final Range< Integer > damage;
     private final int tier;
     private final String description;
+    private final List<CreatureSpecialAttributeTypes> specialAttributes;
     private final boolean isUpgraded;
+
+
 }

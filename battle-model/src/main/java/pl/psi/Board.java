@@ -106,4 +106,6 @@ public class Board {
     public String getObstacleType(Point point) {
         return (obstacleBiMap.containsKey(point)) ? obstacleBiMap.get(point).getType() : null;
     }
+
+
 }
